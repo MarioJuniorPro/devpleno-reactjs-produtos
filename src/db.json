@@ -1,0 +1,43 @@
+{
+  "produtos": [
+    {
+      "id": 1,
+      "produto": "Balde",
+      "categoria": 1
+    },
+    {
+      "id": 2,
+      "produto": "Maçã",
+      "categoria": 2
+    },
+    {
+      "id": 3,
+      "produto": "Bermuda",
+      "categoria": 3
+    },
+    {
+      "id": 4,
+      "produto": "Camisa",
+      "categoria": 3
+    },
+    {
+      "id": 5,
+      "produto": "Boné",
+      "categoria": 3
+    }
+  ],
+  "categorias": [
+    {
+      "id": 1,
+      "categoria": "Limpeza"
+    },
+    {
+      "id": 2,
+      "categoria": "Alimentos"
+    },
+    {
+      "id": 3,
+      "categoria": "Vestuário"
+    }
+  ]
+}

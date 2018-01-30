@@ -3,8 +3,34 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 import Home from './Home'
 import Sobre from './Sobre'
+import Produtos from './Produtos'
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+
+    // this.loadCategorias = this.loadCategorias.bind(this)
+    // this.removeCategoria = this.removeCategoria.bind(this)
+  
+    this.state = {
+      categorias:[]
+    }
+  }
+
+  loadCategorias = async () => {
+    try {
+      const resp = await this.props.Api.loadCategorias()
+      this.setState({ categorias: resp.data })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  removeCategoria = async (categoria) => {
+    await this.props.Api.deleteCategoria(categoria.id)
+    this.loadCategorias()
+  }
+  
   render() {
     return (
       <Router>
@@ -19,7 +45,7 @@ class App extends Component {
                         <Link className="nav-link" to="/">Home <span className="sr-only">(current)</span></Link>
                       </li>
                       <li className="nav-item">
-                        <Link className="nav-link" to="/">Produtos</Link>
+                        <Link className="nav-link" to="/produtos">Produtos</Link>
                       </li>
                       <li className="nav-item">
                         <Link className="nav-link" to="/sobre">Sobre</Link>
@@ -30,11 +56,16 @@ class App extends Component {
               </nav>
             </header>
             <main role="main" className="container">
-              <Route exact path='/' component={Home} />
-              <Route exact path='/sobre' component={Sobre} />
-              {/* <h1 className="mt-5">Sticky footer with fixed navbar</h1> */}
-              {/* <p className="lead">Pin a fixed-height footer to the bottom of the viewport in desktop browsers with this custom HTML and CSS. A fixed navbar has been added with <code>padding-top: 60px;</code> on the <code>body &gt; .container</code>.</p>
-              <p>Back to <a href="../sticky-footer">the default sticky footer</a> minus the navbar.</p> */}
+              <Route path='/' component={Home} exact />
+              <Route path='/sobre' component={Sobre} exact />
+              <Route path='/produtos' render={(props) => {
+                return (<Produtos {...props} 
+                  Api={this.props.Api} 
+                  loadCategorias={this.loadCategorias} 
+                  removeCategoria={this.removeCategoria} 
+                  categorias={this.state.categorias} />
+                )}
+              }/>
             </main>
         </Fragment>
       </Router>
